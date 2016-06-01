@@ -1,290 +1,194 @@
-// JavaScript Document
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Catalogo de Clienteffs</title>
 
-/* 
-* sistema de logs 
-*/
-var i_log = 0;
-function mkLog(text){
-	var date = new Date();
-	var txt = i_log + " - " + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + ": " + text;
-	i_log++;
-	console.log(txt);
-	//$("#log").append(txt  + "<br>");
-}
-
-/* 
-* variables de la aplicación
-*/
-	var existe_db
-	var db
-	
-/* 
-* carga inicial de la app
-*/
-function onBodyLoad() {    
-	document.addEventListener("deviceready", onDeviceReady, false);
-}
-
-function onDeviceReady(){
-	mkLog("Aplicación cargada y lista");
-    //navigator.notification.alert("PhoneGap is working");
-	
-	existe_db = window.localStorage.getItem("existe_db");
-	db = window.openDatabase("ProyectoMonica", "1.0", "La tarea que dejó", 200000);
-	if(existe_db == null){
-		creaDB();
-	}else{
-		cargaDatos();
-	}
-	
-	
-	$("#b_guardar").click(function(e){
-		if($.id != -1){
-		 	saveEditForm();
-		 }else{
-			saveNewForm();
-		 }
-	 });
-}
-
-
-/* 
-* creación de ña base de datos
-*/
-function creaDB(){
-	db.transaction(creaNuevaDB, errorDB, creaSuccess);
-	
-}
-
-unction creaNuevaDB(tx){
-	mkLog("Creando base de datos");
-	
-	tx.executeSql('DROP TABLE IF EXISTS items');
-	
-	var sql = "CREATE TABLE IF NOT EXISTS items ( "+
-		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-		"name VARCHAR(50), " +
-		"description VARCHAR(255), " +
-		"price INTEGER, " +
-		"stock INTEGER, " +
-		"category VARCHAR(50), " +
-		"image VARCHAR(100), " +
-		"date VARCHAR(30) )";
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+        <meta charset="utf-8">
 		
-	tx.executeSql(sql);
-	
-	tx.executeSql("INSERT INTO items (name, description, price, stock, category, date) VALUES ('GTX 960','Está childa', '3500','15','TDV','25/25/2016')");
-}
+        <link href="css/estilos.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="themes/catalogo.css" />
+        <link href="jquery-mobile/jquery.mobile.structure-1.3.0.min.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script src="jquery-mobile/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <script src="jquery-mobile/jquery.mobile-1.3.0.min.js" type="text/javascript"></script>
+        
+        <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+    </head>
+    <body onload="onBodyLoad()">
+        
+  <!--  esta es la página de entrada: el listado de clientes-->
+    <div data-role="page" id="home"  data-theme="a" >
+      <div data-role="header">
+        <div class="ui-btn-left">
+        <a href="#form" data-role="button" data-inline="true" data-icon="plus" data-iconpos="notext">Nuevo</a>
+        </div>
+      	<h1>Catalogo de productos</h1>
+        <div class="ui-btn-right">
+        <a href="#ayuda" data-role="button" data-inline="true" data-icon="info" data-iconpos="notext">Ayuda</a>
+        </div>
+      </div>
+      <div data-role="content">
+        <div data-role="collapsible-set">
+          <div data-role="collapsible" id="lista_TDV">
+            <h3>Tarjetas ve vídeos</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit" >
+              
+              
+            </ul>
+            
+          </div>
+          <div data-role="collapsible" data-collapsed="true" id="lista_TM">
+            <h3>Tarjeas madre</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+          <div data-role="collapsible" data-collapsed="true" id="lista_procesadores">
+            <h3>Procesadores</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+           <div data-role="collapsible" data-collapsed="true" id="lista_memorias">
+            <h3>Memorias</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+           <div data-role="collapsible" data-collapsed="true" id="lista_almacenamiento">
+            <h3>Almacenamiento</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+           <div data-role="collapsible" data-collapsed="true" id="lista_monitores">
+            <h3>Monitores y pantallas</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+   <!-- esta página es la de detalle-->
+    <div data-role="page" id="detalle"  data-theme="b">
+      <div data-role="header"  data-theme="b">
+          <div class="ui-btn-left">
+            <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
+        	</div>
+        <h1>Detalle</h1>
+      </div>
+      <div data-role="content">
+      	<div class="caja_blanca">
+        	<p id="categoria">Ocasional</p>
+            <div id="foto"><img id="foto_img" src="assets/no_foto.png"/></div>
+        </div>
+      
+      	<div class="caja_blanca">
+        <h3 id="nombre">Monica Olivarria</h3>
+         <div ><span id="num_tel">6699900970</span> <a href="#" data-role="button" data-inline="true" data-icon="phone" data-iconpos="notext" id="telefono">Llamar</a></div>
+        <div id="email"><span id="label_mail">m.olivarria@ccumazatlan.mx</span> <a href="#" data-role="button" data-inline="true" data-icon="mail" data-iconpos="notext">Llamar</a></div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <!--página de edición-->
+    <div data-role="page" id="form"  data-theme="a">
+      <div data-role="header"  data-theme="a">
+      	<div class="ui-btn-left">
+            <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
+        	</div>
+        <h1>Producto</h1>
+      </div>
+       <div data-role="content">
+          
+        		<div id="fotoEdit"><a href="#"><img id="fotoEdit_img" src="assets/no_foto.png"/></a>
+            </div>
+       
+           <div data-role="fieldcontain" align="center">
+           <label>Nombre:  </label>
+             <input type="text" name="campoNombre" id="campoNombre" value="" placeholder="Introduce el nombre" />
+           </div>
+ <div data-role="fieldcontain" align="center">
+<label for="textinput3">Imagen:   </label>
+       <input type="file" name="imagen" id="campoImagen" accept="image/x-png, image/gif, image/jpeg" />
+      </div>
+           <div data-role="fieldcontain" align="center">
+           <label>Descripción:   </label>
+             <input type="text" name="campoDescripcion" id="campoDescripcion" value="" placeholder="Introduce la descripción" />
+           </div>
+          
+          <div data-role="fieldcontain" align="center">
+           <label>Precio:   </label>
+             <input type="number" name="campoPrecio" id="campoPrecio" value="" placeholder="Introduce el precio" />
+           </div>
 
+           <div data-role="fieldcontain" align="center">
+           <label>Stock:   </label>
+             <input type="text" name="campoStock" id="campoDescripcion" value="" placeholder="Introduce la cantidad" />
+           </div>
 
-function creaSuccess(){
-	window.localStorage.setItem("existe_db", 1);
-	cargaDatos();
-}
+           <div data-role="fieldcontain" align="center">
+           <label>Fecha:   </label>
+             <input type="date" name="campoFecha" id="campoDescripcion" value="" placeholder="Introduce la fecha" />
+           </div>
 
-function errorDB(err){
-	mkLog("Error procesando SQL " + err.code);
-	navigator.notification.alert("Error procesando SQL " + err.code);
-}
-
-
-
-/* 
-* carga de datos desde la base de datos
-*/
-function cargaDatos(){
-	db.transaction(cargaRegistros, errorDB);
-}
-
-function cargaRegistros(tx){
-	mkLog("Cargando registros de la base de datos");
-	tx.executeSql('SELECT * FROM items', [], cargaDatosSuccess, errorDB);
-}
-
-function cargaDatosSuccess(tx, results){
-	mkLog("Recibidos de la DB " + results.rows.length + " registros");
-	if(results.rows.length == 0){
-		mkLog("No se han recibido registros");
-		navigator.notification.alert("No hay clientes en la base de datos");
-	}
-	
-	for(var i=0; i<results.rows.length; i++){
-		var persona = results.rows.item(i);
-		var selector = $("#lista_" + persona.category + " ul");
-		var foto = persona.image;
-		if(foto == ""){
-			foto = "assets/no_foto.png";
-		}
-		selector.append('<li id="li_'+persona.id+'"><a href="#detalle" data-uid='+persona.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ image +'" class="img_peq"/><span>' + persona.name + '</span></div></a><a href="#form"  data-theme="a" data-uid='+persona.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
-	}
-	
-	$(".linkDetalles").click(function(e){
-		$.id = $(this).data("uid");
-	});
-	
-	$(".linkForm").click(function(e){
-		$.id = $(this).data("uid");
-	});
-}
-
-
-/*
-* vista detalle
-*/
-
-$(document).on("pagebeforeshow", "#detalle", function(){
-	if(db != null){
-		db.transaction(queryDBFindByID, errorDB);
-	}
-});
-
-
-function queryDBFindByID(tx) {
-    tx.executeSql('SELECT * FROM items WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
-}
-
-function queryDetalleSuccess(tx, results) {
-	mkLog("Recibidos de la DB en vista detalle" + results.rows.length + " registros");
-	if(results.rows.length == 0){
-		mkLog("No se han recibido registros para la vista detalle");
-		navigator.notification.alert("No hay detalles para ese elemento");
-	}
-	
-	$.registro = results.rows.item(0);
-	$("#categoria").html($.registro.category);
-		var _foto = $.registro.image;
-		if(_foto == ""){
-			_foto = "assets/no_foto.png";
-		}
-		$("#campoImagen").attr("src", _foto);
-		$("#campoNombre").html($.registro.name );
-		$("#campoDescripcion").html($.registro.description);
-		$("#campoPrecio").html($.registro.price);
-		$("#campoStock").html($.registro.stock);
-		$("#campoFecha").html($.registro.date);
-}
-}
-
-/*
-* vista detalle
-*/
-//vista de la página de edición
-$(document).on('pagebeforeshow', '#form', function(){ 
-	mkLog('ID recuperado en vista form: ' + $.id);
-	
-	initForm();
-	if(db != null && $.id != -1){
-		db.transaction(queryDBFindByIDForm, errorDB);
-	}
-});
-
-function queryDBFindByIDForm(tx) {
-    tx.executeSql('SELECT * FROM items WHERE id='+$.id, [], queryFormSuccess, errorDB);
-}
-
-function queryFormSuccess(tx, results) {
-	mkLog("Recibidos de la DB en vista Form" + results.rows.length + " registros");
-	if(results.rows.length == 0){
-		mkLog("No se han recibido registros para la vista form");
-		navigator.notification.alert("No hay detalles para ese elemento");
-	}
-	
-	$.registro = results.rows.item(0);
-	
-		$.imageURL = $.registro.image;
-		if($.imageURL == ""){
-			$.imageURL = "assets/no_foto.png";
-		}
-		$("#fotoEdit_img").attr("src", $.imageURL);
-		$("#campoImagen").attr("src", _foto);
-		$("#campoNombre").html($.registro.name );
-		$("#campoDescripcion").html($.registro.description);
-		$("#campoPrecio").html($.registro.price);
-		$("#campoStock").html($.registro.stock);
-		$("#campoFecha").html($.registro.date);
-		
-		
-		
-}
-$(document).on('pagebeforeshow', '#home', function(){ 
-	$.id = -1;
-});
-function initForm(){
-	$.imageURL = "assets/no_foto.png";
-	
-	$("#fotoEdit_img").attr("src", $.imageURL);
-	$("#campoNombre").val("");
-	$("#campoDescripcion").val("");
-	$("#campoPrecio").val("");
-	$("#campoStock").val("");
-	$("#campoFecha").val("");
-
-	
-}
-
-
-/*
-* modificando registros
-*/
-function saveEditForm(){
-	if(db != null){
-		db.transaction(queryDBUpdateForm, errorDB, updateFormSuccess);
-	}
-}
-
-function queryDBUpdateForm(tx){
-	var cat = $("#cajaCategorias").find("input:checked").val();
-	tx.executeSql('UPDATE items SET nombre="'+$("#ti_nombre").val()+'", apellidos="'+$("#ti_apellidos").val()+'",telefono="'+$("#ti_telefono").val()+'",email="'+$("#ti_mail").val()+'",categoria="'+cat+'",foto = "'+$.imageURL+'" WHERE id='+$.id);
-}
-function updateFormSuccess(tx) {
-	var selector = $("#li_"+$.id);
-	
-	var selector = $("#li_"+$.id).clone(true);
-	selector.find("img").attr("src", $.imageURL);
-	selector.find("a:first").find("span").html($("#ti_nombre").val() + " " + $("#ti_apellidos").val());
-	
-	
-	$("#li_"+$.id).remove();
-	
-	var cat = $("#cajaCategorias").find("input:checked").val();
-	var lista = $("#lista_" + cat + " ul")
-	lista.append(selector).listview('refresh');
-	
-	
-	$.mobile.changePage("#home");
-}
-
-
-
-/*
-* creando registros
-*/
-function saveNewForm(){
-	if(db != null){
-		db.transaction(queryDBInsertForm, errorDB);
-	}
-}
-
-function queryDBInsertForm(tx){
-	//var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
-	
-	tx.executeSql("INSERT INTO items (name, description,  price, category, stock,image, date) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+"TDV"+"','"+$.imageURL+"','"+$("#campoStock").val()+"','"+$("#campoFecha").val()+"')", [], newFormSuccess, errorDB);
-}
-function newFormSuccess(tx, results) {
-	//var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
-	var lista = $("#lista_" + "TDV" + " ul")
-	
-	
-	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><img src="'+ $.imageUR +'" class="img_peq"/><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
-	obj.find('.linkDetalles').bind('click', function(e){
-		$.id = $(this).data('uid');
-	});
-	
-	obj.find('.linkForm').bind('click', function(e){
-		$.id = $(this).data('uid');
-	});
-	lista.append(obj).listview('refresh');
-	
-	
-	$.mobile.changePage("#home");
-}
+           
+          <div data-role="fieldcontain">
+        <label for="selectmenu" class="select">Categoria:</label>
+        <select name="selectmenu" id="campoCategoria" data-theme="a">
+          <option value="TDV">Tarjetas de vídeo</option>
+          <option value="TM">Tarjetas madre</option>
+          <option value="memorias">Memorias</option>
+          <option value="almacenamiento">Almacenamiento</option>
+          <option value="monitores">Monitores y pantallas</option>
+        </select>
+      </div>
+        
+        <button id="b_guardar">Guardar</button>
+        
+       </div>
+    </div>
+    
+    
+   <!-- formulario de envío de mails-->
+    <div data-role="page" id="mail_page"  data-theme="b">
+      <div data-role="header"  data-theme="b">
+      	<div class="ui-btn-left">
+            <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
+        	</div>
+        <h1>Email</h1>
+      </div>
+      <div data-role="content">
+        <div data-role="fieldcontain">
+          <input type="text" name="ti_asunto" id="ti_asunto" value="" placeholder="asunto"  />
+        </div>
+        <div data-role="fieldcontain">
+          <textarea cols="40" rows="8" name="ta_body" id="ta_body" placeholder="este es el cuerpo del mensaje..."></textarea>
+        </div>
+        <button id="b_enviar">Enviar</button>
+      </div>
+    </div>
+    
+    
+    <!--página de ayuda-->
+    <div data-role="page" id="ayuda" data-theme="a">
+      <div data-role="header">
+      	<div class="ui-btn-left">
+            <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
+        	</div>
+        <h1>Ayuda</h1>
+      </div>
+      <div data-role="content">
+     	 <ul id="listaAyuda">
+        	<li>Usa el + para añadir clientes</li>
+            <li>Con el segundo botón del header podrás añadir clientes a tu catalogo</li>
+            <li>Selecciona la categoría de clientes y podrás verlos</li>
+            <li>Haz click en el ojo para ver los detalles del contacto y para actuar sobre él</li>
+            <li>Haz click sobre la foto del contacto para cambiarla</li>
+            <li>Haz click sobre el botón del teléfono y del mail para actuar</li>
+        </ul>
+      </div>
+    </div>
+    	
+    </body>
+</html>
