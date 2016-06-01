@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+    xmlns:gap = "http://phonegap.com/ns/1.0"
+    id        = "com.phonegap.clientes-monica"
+    version   = "1.0.0">
+
+<name>Catalogo de Clientes</name>
+
+<description>
+Catalogo de Clientes con PhoneGap</description>
+
+<author href="" email="">
+Academico
+</author>
+<icon src="images/icono-clientes.png" gap:density="hdpi" gap:platform="android" />
+<gap:plugin name="org.apache.cordova.dialogs" />
+<preference name="phonegap-version" value="3.3.0" />
+</widget>

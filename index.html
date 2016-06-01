@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Catalogo de Clienteffs</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+        <meta charset="utf-8">
+		
+        <link href="css/estilos.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="themes/catalogo.css" />
+        <link href="jquery-mobile/jquery.mobile.structure-1.3.0.min.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script src="jquery-mobile/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <script src="jquery-mobile/jquery.mobile-1.3.0.min.js" type="text/javascript"></script>
+        
+        <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+    </head>
+    <body onload="onBodyLoad()">
+        
+  <!--  esta es la página de entrada: el listado de clientes-->
+    <div data-role="page" id="home"  data-theme="a" >
+      <div data-role="header">
+        <div class="ui-btn-left">
+        <a href="#form" data-role="button" data-inline="true" data-icon="plus" data-iconpos="notext">Nuevo</a>
+        </div>
+      	<h1>Catalogo de productos</h1>
+        <div class="ui-btn-right">
+        <a href="#ayuda" data-role="button" data-inline="true" data-icon="info" data-iconpos="notext">Ayuda</a>
+        </div>
+      </div>
+      <div data-role="content">
+        <div data-role="collapsible-set">
+          <div data-role="collapsible" id="lista_TDV">
+            <h3>Tarjetas ve vídeos</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit" >
+              
+              
+            </ul>
+            
+          </div>
+          <div data-role="collapsible" data-collapsed="true" id="lista_TM">
+            <h3>Tarjeas madre</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+          <div data-role="collapsible" data-collapsed="true" id="lista_procesadores">
+            <h3>Procesadores</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+           <div data-role="collapsible" data-collapsed="true" id="lista_memorias">
+            <h3>Memorias</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+           <div data-role="collapsible" data-collapsed="true" id="lista_almacenamiento">
+            <h3>Almacenamiento</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+           <div data-role="collapsible" data-collapsed="true" id="lista_monitores">
+            <h3>Monitores y pantallas</h3>
+            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+   <!-- esta página es la de detalle-->
+    <div data-role="page" id="detalle"  data-theme="b">
+      <div data-role="header"  data-theme="b">
+          <div class="ui-btn-left">
+            <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
+        	</div>
+        <h1>Detalle</h1>
+      </div>
+      <div data-role="content">
+      	<div class="caja_blanca">
+        	<p id="categoria">Ocasional</p>
+            <div id="foto"><img id="foto_img" src="assets/no_foto.png"/></div>
+        </div>
+      
+      	<div class="caja_blanca">
+        <h3 id="nombre">Monica Olivarria</h3>
+         <div ><span id="num_tel">6699900970</span> <a href="#" data-role="button" data-inline="true" data-icon="phone" data-iconpos="notext" id="telefono">Llamar</a></div>
+        <div id="email"><span id="label_mail">m.olivarria@ccumazatlan.mx</span> <a href="#" data-role="button" data-inline="true" data-icon="mail" data-iconpos="notext">Llamar</a></div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <!--página de edición-->
+    <div data-role="page" id="form"  data-theme="a">
+      <div data-role="header"  data-theme="a">
+      	<div class="ui-btn-left">
+            <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
+        	</div>
+        <h1>Producto</h1>
+      </div>
+       <div data-role="content">
+           <div class="caja_blanca">
+        		<div id="fotoEdit"><a href="#"><img id="fotoEdit_img" src="assets/no_foto.png"/></a>
+            </div>
+        </div>
+           <div data-role="fieldcontain" align="center">
+             <input type="text" name="ti_nombre" id="ti_nombre" value="" placeholder="nombre" />
+           </div>
+           <div data-role="fieldcontain" align="center">
+             <input type="text" name="ti_apellidos" id="ti_apellidos" value="" placeholder="apellidos" />
+           </div>
+           <div data-role="fieldcontain" align="center">
+             <input type="number" name="ti_telefono" id="ti_telefono" value="" placeholder="teléfono" />
+           </div>
+           <div data-role="fieldcontain" align="center">
+             <input type="email" name="ti_mail" id="ti_mail" value="" placeholder="email" />
+           </div>
+           
+           <div id="cajaCategorias">
+               <div data-role="fieldcontain" align="center">
+                 <fieldset data-role="controlgroup" data-type="horizontal">
+                   <input type="radio" name="categoriaSel" id="cat_ocasional" value="ocasional" />
+                   <label for="cat_ocasional">Ocasional</label>
+                   <input type="radio" name="categoriaSel" id="cat_frecuente" value="frecuente" />
+                   <label for="cat_frecuente">Frecuente</label>
+                   <input type="radio" name="categoriaSel" id="cat_promedio" value="promedio" />
+                   <label for="cat_promedio">Promedio</label>
+                 </fieldset>                 
+               </div>          
+         </div>
+        
+        <button id="b_guardar">Guardar</button>
+        
+       </div>
+    </div>
+    
+    
+   <!-- formulario de envío de mails-->
+    <div data-role="page" id="mail_page"  data-theme="b">
+      <div data-role="header"  data-theme="b">
+      	<div class="ui-btn-left">
+            <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
+        	</div>
+        <h1>Email</h1>
+      </div>
+      <div data-role="content">
+        <div data-role="fieldcontain">
+          <input type="text" name="ti_asunto" id="ti_asunto" value="" placeholder="asunto"  />
+        </div>
+        <div data-role="fieldcontain">
+          <textarea cols="40" rows="8" name="ta_body" id="ta_body" placeholder="este es el cuerpo del mensaje..."></textarea>
+        </div>
+        <button id="b_enviar">Enviar</button>
+      </div>
+    </div>
+    
+    
+    <!--página de ayuda-->
+    <div data-role="page" id="ayuda" data-theme="a">
+      <div data-role="header">
+      	<div class="ui-btn-left">
+            <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
+        	</div>
+        <h1>Ayuda</h1>
+      </div>
+      <div data-role="content">
+     	 <ul id="listaAyuda">
+        	<li>Usa el + para añadir clientes</li>
+            <li>Con el segundo botón del header podrás añadir clientes a tu catalogo</li>
+            <li>Selecciona la categoría de clientes y podrás verlos</li>
+            <li>Haz click en el ojo para ver los detalles del contacto y para actuar sobre él</li>
+            <li>Haz click sobre la foto del contacto para cambiarla</li>
+            <li>Haz click sobre el botón del teléfono y del mail para actuar</li>
+        </ul>
+      </div>
+    </div>
+    	
+    </body>
+</html>
