@@ -30,7 +30,7 @@ function onDeviceReady(){
     //navigator.notification.alert("PhoneGap is working");
 	
 	existe_db = window.localStorage.getItem("existe_db");
-	db = window.openDatabase("clientes", "1.0", "DB del curso Phonegap", 200000);
+	db = window.openDatabase("ProyectoMonica", "1.0", "La tarea que dejó", 200000);
 	if(existe_db == null){
 		creaDB();
 	}else{
@@ -56,23 +56,24 @@ function creaDB(){
 	
 }
 
-function creaNuevaDB(tx){
+unction creaNuevaDB(tx){
 	mkLog("Creando base de datos");
 	
-	tx.executeSql('DROP TABLE IF EXISTS clientes');
+	tx.executeSql('DROP TABLE IF EXISTS items');
 	
-	var sql = "CREATE TABLE IF NOT EXISTS clientes ( "+
+	var sql = "CREATE TABLE IF NOT EXISTS items ( "+
 		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-		"nombre VARCHAR(50), " +
-		"apellidos VARCHAR(50), " +
-		"telefono VARCHAR(10), " +
-		"categoria VARCHAR(10), " +
-		"foto VARCHAR(200), " + 
-		"email VARCHAR(30) )";
+		"name VARCHAR(50), " +
+		"description VARCHAR(255), " +
+		"price INTEGER, " +
+		"stock INTEGER, " +
+		"category VARCHAR(50), " +
+		"image VARCHAR(100), " +
+		"date VARCHAR(30) )";
 		
 	tx.executeSql(sql);
 	
-	tx.executeSql("INSERT INTO clientes (id,nombre,apellidos,telefono,categoria,foto,email) VALUES (1,'Mónica','Olivarría','6699900970','ocasional','','m.olivarria@ccumazatlan.mx')");
+	tx.executeSql("INSERT INTO items (name, description, price, stock, category, date) VALUES ('GTX 960','Está childa', '3500','15','Tarjetas de vídeo','25/25/2016')");
 }
 
 
@@ -97,7 +98,7 @@ function cargaDatos(){
 
 function cargaRegistros(tx){
 	mkLog("Cargando registros de la base de datos");
-	tx.executeSql('SELECT * FROM clientes', [], cargaDatosSuccess, errorDB);
+	tx.executeSql('SELECT * FROM items', [], cargaDatosSuccess, errorDB);
 }
 
 function cargaDatosSuccess(tx, results){
@@ -109,12 +110,12 @@ function cargaDatosSuccess(tx, results){
 	
 	for(var i=0; i<results.rows.length; i++){
 		var persona = results.rows.item(i);
-		var selector = $("#lista_" + persona.categoria + " ul");
-		var foto = persona.foto;
+		var selector = $("#lista_" + persona.category + " ul");
+		var foto = persona.image;
 		if(foto == ""){
 			foto = "assets/no_foto.png";
 		}
-		selector.append('<li id="li_'+persona.id+'"><a href="#detalle" data-uid='+persona.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ foto +'" class="img_peq"/><span>' + persona.nombre + ' ' + persona.apellidos+ '</span></div></a><a href="#form"  data-theme="a" data-uid='+persona.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
+		selector.append('<li id="li_'+persona.id+'"><a href="#detalle" data-uid='+persona.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ image +'" class="img_peq"/><span>' + persona.name + '</span></div></a><a href="#form"  data-theme="a" data-uid='+persona.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
 	}
 	
 	$(".linkDetalles").click(function(e){
@@ -139,7 +140,7 @@ $(document).on("pagebeforeshow", "#detalle", function(){
 
 
 function queryDBFindByID(tx) {
-    tx.executeSql('SELECT * FROM clientes WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
+    tx.executeSql('SELECT * FROM items WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
 }
 
 function queryDetalleSuccess(tx, results) {
@@ -150,16 +151,18 @@ function queryDetalleSuccess(tx, results) {
 	}
 	
 	$.registro = results.rows.item(0);
-	$("#categoria").html($.registro.categoria);
-		var _foto = $.registro.foto;
+	$("#categoria").html($.registro.category);
+		var _foto = $.registro.image;
 		if(_foto == ""){
 			_foto = "assets/no_foto.png";
 		}
-		$("#foto_img").attr("src", _foto);
-		$("#nombre").html($.registro.nombre + " " + $.registro.apellidos);
-		$("#num_tel").html($.registro.telefono);
-		$("#telefono").attr("href", "tel:" + $.registro.telefono);
-		$("#label_mail").html("Mail: " + $.registro.email);
+		$("#campoImagen").attr("src", _foto);
+		$("#campoNombre").html($.registro.name );
+		$("#campoDescripcion").html($.registro.description);
+		$("#campoPrecio").html($.registro.price);
+		$("#campoStock").html($.registro.stock);
+		$("#campoFecha").html($.registro.date);
+}
 }
 
 /*
@@ -176,7 +179,7 @@ $(document).on('pagebeforeshow', '#form', function(){
 });
 
 function queryDBFindByIDForm(tx) {
-    tx.executeSql('SELECT * FROM clientes WHERE id='+$.id, [], queryFormSuccess, errorDB);
+    tx.executeSql('SELECT * FROM items WHERE id='+$.id, [], queryFormSuccess, errorDB);
 }
 
 function queryFormSuccess(tx, results) {
@@ -188,17 +191,19 @@ function queryFormSuccess(tx, results) {
 	
 	$.registro = results.rows.item(0);
 	
-		$.imageURL = $.registro.foto;
+		$.imageURL = $.registro.image;
 		if($.imageURL == ""){
 			$.imageURL = "assets/no_foto.png";
 		}
 		$("#fotoEdit_img").attr("src", $.imageURL);
-		$("#ti_nombre").val($.registro.nombre);
-		$("#ti_apellidos").val($.registro.apellidos);
-		$("#ti_telefono").val($.registro.telefono);
-		$("#ti_mail").val($.registro.email);
+		$("#campoImagen").attr("src", _foto);
+		$("#campoNombre").html($.registro.name );
+		$("#campoDescripcion").html($.registro.description);
+		$("#campoPrecio").html($.registro.price);
+		$("#campoStock").html($.registro.stock);
+		$("#campoFecha").html($.registro.date);
 		
-		$("#cat_"+$.registro.categoria).trigger("click").trigger("click");	
+		
 		
 }
 $(document).on('pagebeforeshow', '#home', function(){ 
@@ -208,12 +213,13 @@ function initForm(){
 	$.imageURL = "assets/no_foto.png";
 	
 	$("#fotoEdit_img").attr("src", $.imageURL);
-	$("#ti_nombre").val("");
-	$("#ti_apellidos").val("");
-	$("#ti_telefono").val("");
-	$("#ti_mail").val("");
-		
-	$("#cat_ocasional").trigger("click").trigger("click")
+	$("#campoNombre").val("");
+	$("#campoDescripcion").val("");
+	$("#campoPrecio").val("");
+	$("#campoStock").val("");
+	$("#campoFecha").val("");
+
+	
 }
 
 
@@ -228,7 +234,7 @@ function saveEditForm(){
 
 function queryDBUpdateForm(tx){
 	var cat = $("#cajaCategorias").find("input:checked").val();
-	tx.executeSql('UPDATE clientes SET nombre="'+$("#ti_nombre").val()+'", apellidos="'+$("#ti_apellidos").val()+'",telefono="'+$("#ti_telefono").val()+'",email="'+$("#ti_mail").val()+'",categoria="'+cat+'",foto = "'+$.imageURL+'" WHERE id='+$.id);
+	tx.executeSql('UPDATE items SET nombre="'+$("#ti_nombre").val()+'", apellidos="'+$("#ti_apellidos").val()+'",telefono="'+$("#ti_telefono").val()+'",email="'+$("#ti_mail").val()+'",categoria="'+cat+'",foto = "'+$.imageURL+'" WHERE id='+$.id);
 }
 function updateFormSuccess(tx) {
 	var selector = $("#li_"+$.id);
@@ -260,16 +266,16 @@ function saveNewForm(){
 }
 
 function queryDBInsertForm(tx){
-	var cat = $("#cajaCategorias").find("input:checked").val();
+	var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
 	
-	tx.executeSql("INSERT INTO clientes (nombre,apellidos,telefono,categoria,foto,email) VALUES ('"+$("#ti_nombre").val()+"','"+$("#ti_apellidos").val()+"','"+$("#ti_telefono").val()+"','"+cat+"','"+$.imageURL+"','"+$("#ti_mail").val()+"')", [], newFormSuccess, errorDB);
+	tx.executeSql("INSERT INTO items (name, description,  price, category, stock,image, date) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+cat+"','"+$.imageURL+"','"+$("#campoStock").val()+"','"+$("#campoFecha").val()+"')", [], newFormSuccess, errorDB);
 }
 function newFormSuccess(tx, results) {
-	var cat = $("#cajaCategorias").find("input:checked").val();
+	var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
 	var lista = $("#lista_" + cat + " ul")
 	
 	
-	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><img src="'+ $.imageUR +'" class="img_peq"/><span>' + $("#ti_nombre").val() + " " + $("#ti_apellidos").val()+ '</span></div></a><a href="#form"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
+	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><img src="'+ $.imageUR +'" class="img_peq"/><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
 	obj.find('.linkDetalles').bind('click', function(e){
 		$.id = $(this).data('uid');
 	});
