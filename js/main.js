@@ -73,7 +73,7 @@ unction creaNuevaDB(tx){
 		
 	tx.executeSql(sql);
 	
-	tx.executeSql("INSERT INTO items (name, description, price, stock, category, date) VALUES ('GTX 960','Está childa', '3500','15','Tarjetas de vídeo','25/25/2016')");
+	tx.executeSql("INSERT INTO items (name, description, price, stock, category, date) VALUES ('GTX 960','Está childa', '3500','15','TDV','25/25/2016')");
 }
 
 
@@ -266,13 +266,13 @@ function saveNewForm(){
 }
 
 function queryDBInsertForm(tx){
-	var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
+	//var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
 	
-	tx.executeSql("INSERT INTO items (name, description,  price, category, stock,image, date) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+cat+"','"+$.imageURL+"','"+$("#campoStock").val()+"','"+$("#campoFecha").val()+"')", [], newFormSuccess, errorDB);
+	tx.executeSql("INSERT INTO items (name, description,  price, category, stock,image, date) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+"TDV"+"','"+$.imageURL+"','"+$("#campoStock").val()+"','"+$("#campoFecha").val()+"')", [], newFormSuccess, errorDB);
 }
 function newFormSuccess(tx, results) {
-	var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
-	var lista = $("#lista_" + cat + " ul")
+	//var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
+	var lista = $("#lista_" + "TDV" + " ul")
 	
 	
 	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><img src="'+ $.imageUR +'" class="img_peq"/><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
