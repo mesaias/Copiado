@@ -31,7 +31,7 @@
       <div data-role="content">
         <div data-role="collapsible-set">
           <div data-role="collapsible" id="lista_TDV">
-            <h3>Tarjetas ve vídeos</h3>
+            <h3>Tarjetas de vídeo</h3>
             <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit" >
               
               
@@ -39,27 +39,12 @@
             
           </div>
           <div data-role="collapsible" data-collapsed="true" id="lista_TM">
-            <h3>Tarjeas madre</h3>
+            <h3>Tarjetas madres</h3>
             <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
             </ul>
           </div>
-          <div data-role="collapsible" data-collapsed="true" id="lista_procesadores">
-            <h3>Procesadores</h3>
-            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
-            </ul>
-          </div>
-           <div data-role="collapsible" data-collapsed="true" id="lista_memorias">
-            <h3>Memorias</h3>
-            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
-            </ul>
-          </div>
-           <div data-role="collapsible" data-collapsed="true" id="lista_almacenamiento">
+          <div data-role="collapsible" data-collapsed="true" id="lista_Almacenamiento">
             <h3>Almacenamiento</h3>
-            <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
-            </ul>
-          </div>
-           <div data-role="collapsible" data-collapsed="true" id="lista_monitores">
-            <h3>Monitores y pantallas</h3>
             <ul data-role="listview" data-inset="true" data-filter-placeholder="Buscar Clientes..." data-split-icon="edit">
             </ul>
           </div>
@@ -69,8 +54,8 @@
     
     
    <!-- esta página es la de detalle-->
-    <div data-role="page" id="detalle"  data-theme="b">
-      <div data-role="header"  data-theme="b">
+    <div data-role="page" id="detalle"  data-theme="a">
+      <div data-role="header"  data-theme="a">
           <div class="ui-btn-left">
             <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
         	</div>
@@ -97,52 +82,40 @@
       	<div class="ui-btn-left">
             <a href="#" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext" data-rel="back">Volver</a>
         	</div>
-        <h1>Producto</h1>
+        <h1>Registro de productos</h1>
       </div>
        <div data-role="content">
-          
+           <div class="caja_blanca">
         		<div id="fotoEdit"><a href="#"><img id="fotoEdit_img" src="assets/no_foto.png"/></a>
             </div>
-       
+        </div>
            <div data-role="fieldcontain" align="center">
-           <label>Nombre:  </label>
-             <input type="text" name="campoNombre" id="campoNombre" value="" placeholder="Introduce el nombre" />
+             <input type="text" name="campoNombre" id="campoNombre" value="" placeholder="Nombre del producto" />
            </div>
- <div data-role="fieldcontain" align="center">
-<label for="textinput3">Imagen:   </label>
-       <input type="file" name="imagen" id="campoImagen" accept="image/x-png, image/gif, image/jpeg" />
-      </div>
            <div data-role="fieldcontain" align="center">
-           <label>Descripción:   </label>
-             <input type="text" name="campoDescripcion" id="campoDescripcion" value="" placeholder="Introduce la descripción" />
+             <input type="text" name="campoDescripcion" id="campoDescripcion" value="" placeholder="Descripción" />
            </div>
-          
-          <div data-role="fieldcontain" align="center">
-           <label>Precio:   </label>
-             <input type="number" name="campoPrecio" id="campoPrecio" value="" placeholder="Introduce el precio" />
-           </div>
-
            <div data-role="fieldcontain" align="center">
-           <label>Stock:   </label>
-             <input type="text" name="campoStock" id="campoDescripcion" value="" placeholder="Introduce la cantidad" />
+             <input type="number" name="campoPrecio" id="campoPrecio" value="" placeholder="Precio" />
            </div>
-
            <div data-role="fieldcontain" align="center">
-           <label>Fecha:   </label>
-             <input type="date" name="campoFecha" id="campoDescripcion" value="" placeholder="Introduce la fecha" />
+             <input type="number" name="campoStock" id="campoStock" value="" placeholder="Existencia" />
            </div>
 
            
-          <div data-role="fieldcontain">
-        <label for="selectmenu" class="select">Categoria:</label>
-        <select name="selectmenu" id="campoCategoria" data-theme="a">
-          <option value="TDV">Tarjetas de vídeo</option>
-          <option value="TM">Tarjetas madre</option>
-          <option value="memorias">Memorias</option>
-          <option value="almacenamiento">Almacenamiento</option>
-          <option value="monitores">Monitores y pantallas</option>
-        </select>
-      </div>
+           
+           <div id="cajaCategorias">
+               <div data-role="fieldcontain" align="center">
+                 <fieldset data-role="controlgroup" data-type="horizontal">
+                   <input type="radio" name="categoriaSel" id="cat_ocasional" value="TDV" />
+                   <label for="cat_ocasional">Tarjeta de vídeo</label>
+                   <input type="radio" name="categoriaSel" id="cat_frecuente" value="TM" />
+                   <label for="cat_frecuente">Tarjeta madre</label>
+                   <input type="radio" name="categoriaSel" id="cat_promedio" value="Almacenamiento" />
+                   <label for="cat_promedio">Almacenamiento</label>
+                 </fieldset>                 
+               </div>          
+         </div>
         
         <button id="b_guardar">Guardar</button>
         
