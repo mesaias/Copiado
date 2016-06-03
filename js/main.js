@@ -161,45 +161,48 @@ function queryDetalleSuccess(tx, results) {
 	}
 	
 	$.registro = results.rows.item(0);
+	var _foto;
 	
 		if ($.registro.categoria=="TDV")
 		{
 			$("#categoria").html("Tarjeta de vídeo");
+			_foto = "images/tarjetavideo.png";
 		}
 
 		if ($.registro.categoria=="TM")
 		{
 			$("#categoria").html("Tarjeta madre");
+			_foto = "images/mother.jpg";
 		}
 		if ($.registro.categoria=="monitores")
 		{
 			$("#categoria").html("Pantallas o Monitores");
+			_foto = "images/monitor.jpg";
 		}
 
 		if ($.registro.categoria=="memorias")
 		{
 			$("#categoria").html("Memorias");
+			_foto = "images/ram.jpg";
 		}
 
 		if ($.registro.categoria=="Almacenamiento")
 		{
 			$("#categoria").html("Almacenamiento");
+			_foto = "images/drive.jpg";
 		}
 
-		var _foto;
-		if(registro.categoria=="TM")
-		{
-		foto = "images/mother.jpg";
-		}
-		if(registro.categoria=="TM")
-		{
-		foto = "images/tarjetavideo.png";
-		}
+		
+		
+		
+		
+		
+		
+		
 
-		if(registro.categoria=="Almacenamiento")
-		{
-		foto = "images/drive.jpg";
-		}
+		
+		
+		
 		
 		$("#foto_img").attr("src", _foto);
 		
