@@ -140,7 +140,7 @@ $(document).on("pagebeforeshow", "#detalle", function(){
 
 
 function queryDBFindByID(tx) {
-    tx.executeSql('SELECT * FROM clientes WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
+    tx.executeSql('SELECT * FROM articulos WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
 }
 
 function queryDetalleSuccess(tx, results) {
@@ -157,10 +157,13 @@ function queryDetalleSuccess(tx, results) {
 			_foto = "assets/no_foto.png";
 		}
 		$("#foto_img").attr("src", _foto);
-		$("#nombre").html($.registro.nombre + " " + $.registro.apellidos);
-		$("#num_tel").html($.registro.telefono);
-		$("#telefono").attr("href", "tel:" + $.registro.telefono);
-		$("#label_mail").html("Mail: " + $.registro.email);
+		$("#nombre").html($.registro.nombre);
+		$("#descripcion").html($.registro.descripcion);
+		$("#precio").html($.registro.precio);
+		$("#existencia").html($.registro.stock);
+		$("#categoriaDelPro").html($.registro.categoria);
+		$("#fecha").html($.registro.fecha);
+	
 }
 
 /*
