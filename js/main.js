@@ -53,8 +53,8 @@ function onDeviceReady(){
 			saveNewForm();
 		 }
 	 });
-}
 
+	
 	$("#b_eliminar").click(function(e){
 		if($.id != -1){
 		 	deleteItem();
