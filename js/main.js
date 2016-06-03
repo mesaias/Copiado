@@ -271,7 +271,7 @@ function queryDBInsertForm(tx){
 
 	//var cat = $("#cajaCategorias").find("input:checked").val();
 	var cat= $('#seleccionCategorias').val();
-	tx.executeSql("INSERT INTO articulos (nombre,descripcion,precio,categoria, stock) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+cat+"','"+$("#campoStock").val()+"')", [], newFormSuccess, errorDB);
+	tx.executeSql("INSERT INTO articulos (nombre,descripcion,precio,categoria, stock, fecha) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+cat+"','"+$("#campoStock").val()+"', '"+$("#campoFecha").val()+"')", [], newFormSuccess, errorDB);
 }
 function newFormSuccess(tx, results) {
 	/*var e = document.getElementById("seleccionCategorias");
