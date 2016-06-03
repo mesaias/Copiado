@@ -261,8 +261,8 @@ function saveNewForm(){
 }
 
 function queryDBInsertForm(tx){
-	var cat = "myvalue";
-	$('#seleccionCategorias').val(cat);
+	var $("#seleccionCategorias :selected").text() //the text content of the selected option
+		$("#seleccionCategorias").val() 
 
 	//var cat = $("#cajaCategorias").find("input:checked").val();
 	
