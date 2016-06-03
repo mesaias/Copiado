@@ -364,9 +364,8 @@ function queryDBDetele(tx){
 	tx.executeSql('DELETE FROM articulos WHERE id='+$.id);
 }
 function updateFormSuccess2(tx) {
-	var selector = $("#li_"+$.id);
-	
-	var selector = $("#li_"+$.id).clone(true);
+	var cat= $('#seleccionCategorias2').val();
+	var lista = $("#lista_" + cat + " ul")
 
 	
 	
