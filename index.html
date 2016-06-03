@@ -93,7 +93,8 @@
              <input type="text" name="campoNombre" id="campoNombre" value="" placeholder="Nombre del producto" />
            </div>
            <div data-role="fieldcontain" align="center">
-             <input type="file"  name="image" accept="image/*" capture>
+              <input type='file' id="inputFile" />
+               <img id="image_upload_preview" src="http://placehold.it/100x100" alt="your image" />
            </div>
            <div data-role="fieldcontain" align="center">
              <input type="text" name="campoDescripcion" id="campoDescripcion" value="" placeholder="Descripción" />
@@ -115,6 +116,7 @@
                 </select>         
                </div>          
          </div>
+        <center> Fecha de Registro</center>
          <div data-role="fieldcontain" align="center">
              <input type="date" name="campoFecha" id="campoFecha"  placeholder="Fecha de registro" />
            </div>
@@ -127,7 +129,24 @@
        </div>
     </div>
     
-    
+    <script type="text/javascript">
+       function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_upload_preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#inputFile").change(function () {
+        readURL(this);
+    });
+      
+    </script>
    <!-- formulario de envío de mails-->
     <div data-role="page" id="mail_page"  data-theme="b">
       <div data-role="header"  data-theme="b">
