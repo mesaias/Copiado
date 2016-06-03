@@ -222,7 +222,7 @@ function queryFormSuccess(tx, results) {
 		
 		//$("#cat_"+$.registro.categoria).trigger("click").trigger("click");	
 
-		$('#seleccionCategorias2').val($.registro.categoria)
+		//	$('#seleccionCategorias2').val($.registro.categoria)
 		
 }
 $(document).on('pagebeforeshow', '#home', function(){ 
