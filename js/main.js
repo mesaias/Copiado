@@ -260,20 +260,20 @@ function saveEditForm(){
 }
 
 function queryDBUpdateForm(tx){
-	var cat = $("#cajaCategorias").find("input:checked").val();
-	tx.executeSql('UPDATE articulos SET nombre="'+$("#campoNombre2").val()+'", apellidos="'+$("#ti_apellidos").val()+'",telefono="'+$("#ti_telefono").val()+'",email="'+$("#ti_mail").val()+'",categoria="'+cat+'",foto = "'+$.imageURL+'" WHERE id='+$.id);
+	var cat= $('#seleccionCategorias2').val();
+	tx.executeSql('UPDATE articulos SET nombre="'+$("#campoNombre2").val()+'", descripcion="'+$("#campoDescripcion2").val()+'",precio="'+$("#campoPrecio2").val()+'",stock="'+$("#campoStock2").val()+'",categoria="'+cat+'", fecha="'+$("#campoFecha2").val()+'" WHERE id='+$.id);
 }
 function updateFormSuccess(tx) {
 	var selector = $("#li_"+$.id);
 	
 	var selector = $("#li_"+$.id).clone(true);
 	selector.find("img").attr("src", $.imageURL);
-	selector.find("a:first").find("span").html($("#ti_nombre").val() + " " + $("#ti_apellidos").val());
+	selector.find("a:first").find("span").html($("#campoNombre2").val());
 	
 	
 	$("#li_"+$.id).remove();
 	
-	var cat = $("#cajaCategorias").find("input:checked").val();
+	var cat= $('#seleccionCategorias2').val();
 	var lista = $("#lista_" + cat + " ul")
 	lista.append(selector).listview('refresh');
 	
