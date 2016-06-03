@@ -115,7 +115,7 @@ function cargaDatosSuccess(tx, results){
 		if(foto == ""){
 			foto = "assets/no_foto.png";
 		}
-		selector.append('<li id="li_'+producto.id+'"><a href="#detalle" data-uid='+producto.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ foto +'" class="img_peq"/><span>' + producto.nombre + '</span></div></a><a href="#form2"  data-theme="a" data-uid='+producto.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
+		selector.append('<li id="li_'+producto.id+'"><a href="#detalle" data-uid='+producto.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ foto +'" class="img_peq"/><span>' + producto.nombre + '</span></div></a><a href="#form"  data-theme="a" data-uid='+producto.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
 	}
 	
 	$(".linkDetalles").click(function(e){
@@ -161,21 +161,12 @@ function queryDetalleSuccess(tx, results) {
 		{
 			$("#categoria").html("Tarjeta madre");
 		}
-		if ($.registro.categoria=="monitores")
-		{
-			$("#categoria").html("Pantallas o Monitores");
-		}
-
-		if ($.registro.categoria=="memorias")
-		{
-			$("#categoria").html("Memorias");
-		}
-		$("#foto_img").attr("src", _foto);
+		
 		var _foto = $.registro.foto;
 		if(_foto == ""){
 			_foto = "assets/no_foto.png";
 		}
-		
+		$("#foto_img").attr("src", _foto);
 		$("#nombre").html($.registro.nombre);
 		$("#descripcion").html($.registro.descripcion);
 		$("#precio").html($.registro.precio);
@@ -188,7 +179,7 @@ function queryDetalleSuccess(tx, results) {
 * vista detalle
 */
 //vista de la página de edición
-$(document).on('pagebeforeshow', '#form2', function(){ 
+$(document).on('pagebeforeshow', '#form', function(){ 
 	mkLog('ID recuperado en vista form: ' + $.id);
 	
 	initForm();
@@ -214,16 +205,13 @@ function queryFormSuccess(tx, results) {
 		if($.imageURL == ""){
 			$.imageURL = "assets/no_foto.png";
 		}
-		$("#fotoEdit_img2").attr("src", $.imageURL);
-		$("#campoNombre2").val($.registro.nombre);
-		$("#campoDescripcion2").val($.registro.descripcion);
-		$("#campoPrecio2").val($.registro.precio);
-		$("#campoStock2").val($.registro.stock);
-		$("#campoFecha2").val($.registro.fecha);
+		$("#fotoEdit_img").attr("src", $.imageURL);
+		$("#ti_nombre").val($.registro.nombre);
+		$("#ti_apellidos").val($.registro.apellidos);
+		$("#ti_telefono").val($.registro.telefono);
+		$("#ti_mail").val($.registro.email);
 		
-		//$("#cat_"+$.registro.categoria).trigger("click").trigger("click");	
-
-			$('#seleccionCategorias2').val($.registro.categoria)
+		$("#cat_"+$.registro.categoria).trigger("click").trigger("click");	
 		
 }
 $(document).on('pagebeforeshow', '#home', function(){ 
@@ -232,13 +220,13 @@ $(document).on('pagebeforeshow', '#home', function(){
 function initForm(){
 	$.imageURL = "assets/no_foto.png";
 	
-	$("#fotoEdit_img2").attr("src", $.imageURL);
-	$("#campoNombre2").val("");
-	$("#campoDescripcion2").val("");
-	$("#campoPrecio2").val("");
-	$("#campoStock2").val("");
+	$("#fotoEdit_img").attr("src", $.imageURL);
+	$("#ti_nombre").val("");
+	$("#ti_apellidos").val("");
+	$("#ti_telefono").val("");
+	$("#ti_mail").val("");
 		
-	
+	$("#cat_ocasional").trigger("click").trigger("click")
 }
 
 
@@ -302,12 +290,11 @@ function newFormSuccess(tx, results) {
 		var value = e.options[e.selectedIndex].value;
 		var cat = e.options[e.selectedIndex].text;*/
 	//var cat = $("#cajaCategorias").find("input:checked").val();
-
 	var cat= $('#seleccionCategorias').val();
 	var lista = $("#lista_" + cat + " ul")
 	
 	
-	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form2"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
+	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
 	obj.find('.linkDetalles').bind('click', function(e){
 		$.id = $(this).data('uid');
 	});
