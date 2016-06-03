@@ -151,7 +151,16 @@ function queryDetalleSuccess(tx, results) {
 	}
 	
 	$.registro = results.rows.item(0);
-	$("#categoria").html($.registro.categoria);
+	
+		if ($.registro.categoria==TDV)
+		{
+			$("#categoria").html("Tarjeta de vídeo");
+		}
+
+		if ($.registro.categoria==TM)
+		{
+			$("#categoria").html("Tarjeta madre");
+		}
 		var _foto = $.registro.foto;
 		if(_foto == ""){
 			_foto = "assets/no_foto.png";
