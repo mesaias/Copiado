@@ -168,26 +168,23 @@
             </div>
         </div>
            <div data-role="fieldcontain" align="center">
-             <input type="text" name="campoNombre" id="campoNombre" value="" placeholder="Nombre del producto" />
+             <input type="text" name="campoNombre" id="campoNombre" value="" placeholder="Nombre del producto" required="" />
+           </div>
+           
+           <div data-role="fieldcontain" align="center">
+             <input type="text" name="campoDescripcion" id="campoDescripcion" value="" placeholder="Descripción" required="" />
            </div>
            <div data-role="fieldcontain" align="center">
-              <input type='file' id="image" />
-              
-           </div>
-           <div data-role="fieldcontain" align="center">
-             <input type="text" name="campoDescripcion" id="campoDescripcion" value="" placeholder="Descripción" />
-           </div>
-           <div data-role="fieldcontain" align="center">
-             <input type="number" name="campoPrecio" id="campoPrecio" value="" placeholder="Precio" />
+             <input type="number" name="campoPrecio" id="campoPrecio" value="" placeholder="Precio" required="" />
            </div>
            <center>Existencias</center>
            <div data-role="fieldcontain" align="center">
-             <input type="range" name="campoStock" id="campoStock" value="1" min="0" max="100" />
+             <input type="range" name="campoStock" id="campoStock" value="1" min="0" max="100" required="" />
            </div>
 
             <div id="seleccion">
                <div data-role="fieldcontain" align="center">
-                 <select name="seleccionCategorias" id="seleccionCategorias" title="Selecciona una categoría" class="required" required >
+                 <select name="seleccionCategorias" id="seleccionCategorias" title="Selecciona una categoría" class="required" >
                 <option value="TDV">Tarjetas de vídeo</option>
                  <option value="TM">Tarjeta madre</option>
                  <option value="Almacenamiento">Almacenamiento</option>
@@ -198,7 +195,7 @@
          </div>
         <center> Fecha de Registro</center>
          <div data-role="fieldcontain" align="center">
-             <input type="date" name="campoFecha" id="campoFecha"  placeholder="Fecha de registro" />
+             <input type="date" name="campoFecha" id="campoFecha"  placeholder="Fecha de registro" required="" />
            </div>
            
 
