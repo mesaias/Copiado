@@ -181,12 +181,26 @@ function queryDetalleSuccess(tx, results) {
 			$("#categoria").html("Memorias");
 		}
 
+		if ($.registro.categoria=="Almacenamiento")
+		{
+			$("#categoria").html("Almacenamiento");
+		}
+
 		var _foto;
 		if(registro.categoria=="TM")
 		{
 		foto = "images/mother.jpg";
 		}
+		if(registro.categoria=="TM")
+		{
+		foto = "images/tarjetavideo.png";
+		}
 
+		if(registro.categoria=="Almacenamiento")
+		{
+		foto = "images/drive.jpg";
+		}
+		
 		$("#foto_img").attr("src", _foto);
 		
 		
