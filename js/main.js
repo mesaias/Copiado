@@ -140,7 +140,7 @@ $(document).on("pagebeforeshow", "#detalle", function(){
 
 
 function queryDBFindByID(tx) {
-    tx.executeSql('SELECT * FROM articulos WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
+    tx.executeSql('SELECT * FROM clientes WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
 }
 
 function queryDetalleSuccess(tx, results) {
@@ -151,28 +151,16 @@ function queryDetalleSuccess(tx, results) {
 	}
 	
 	$.registro = results.rows.item(0);
-	
-		if ($.registro.categoria=="TDV")
-		{
-			$("#categoria").html("Tarjeta de vídeo");
-		}
-
-		if ($.registro.categoria=="TM")
-		{
-			$("#categoria").html("Tarjeta madre");
-		}
-		
+	$("#categoria").html($.registro.categoria);
 		var _foto = $.registro.foto;
 		if(_foto == ""){
 			_foto = "assets/no_foto.png";
 		}
 		$("#foto_img").attr("src", _foto);
-		$("#nombre").html($.registro.nombre);
-		$("#descripcion").html($.registro.descripcion);
-		$("#precio").html($.registro.precio);
-		$("#existencia").html($.registro.stock);
-		$("#fecha").html($.registro.fecha);
-	
+		$("#nombre").html($.registro.nombre + " " + $.registro.apellidos);
+		$("#num_tel").html($.registro.telefono);
+		$("#telefono").attr("href", "tel:" + $.registro.telefono);
+		$("#label_mail").html("Mail: " + $.registro.email);
 }
 
 /*
@@ -189,7 +177,7 @@ $(document).on('pagebeforeshow', '#form', function(){
 });
 
 function queryDBFindByIDForm(tx) {
-    tx.executeSql('SELECT * FROM articulos WHERE id='+$.id, [], queryFormSuccess, errorDB);
+    tx.executeSql('SELECT * FROM clientes WHERE id='+$.id, [], queryFormSuccess, errorDB);
 }
 
 function queryFormSuccess(tx, results) {
