@@ -377,9 +377,35 @@ function newFormSuccess(tx, results) {
 
 	var cat= $('#seleccionCategorias').val();
 	var lista = $("#lista_" + cat + " ul")
+	var foto;
+
+	if (cat=="TDV")
+	{
+		foto="images/tarjetavideo.png";
+	}
 	
+
+	if (cat=="TM")
+	{
+		foto="images/mother.jpg";
+	}
+
+	if (cat=="monitores")
+	{
+		foto="images/monitor.png";
+	}
+
+	if (cat=="Almacenamiento")
+	{
+		foto="images/drive.png";
+	}
+
+	if (cat=="memorias")
+	{
+		foto="images/ram.png";
+	}
 	
-	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form2"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
+	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><img src="'+ foto +'" class="img_peq"/><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form2"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
 	obj.find('.linkDetalles').bind('click', function(e){
 		$.id = $(this).data('uid');
 	});
