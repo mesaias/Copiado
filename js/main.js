@@ -304,14 +304,22 @@ function updateFormSuccess(tx) {
 	var selector = $("#li_"+$.id);
 	
 	var selector = $("#li_"+$.id).clone(true);
-	selector.find("img").attr("src", $.imageURL);
+
+	var cat= $('#seleccionCategorias2').val();
+	var lista = $("#lista_" + cat + " ul")
+	if (cat=="TDV")
+	{
+		selector.find("img").attr("src", "images/tarjetavideo.png");
+	}
+	
+
+
 	selector.find("a:first").find("span").html($("#campoNombre2").val());
 	
 	
 	$("#li_"+$.id).remove();
 	
-	var cat= $('#seleccionCategorias2').val();
-	var lista = $("#lista_" + cat + " ul")
+	
 	lista.append(selector).listview('refresh');
 	
 	
