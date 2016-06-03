@@ -101,8 +101,9 @@
            <div data-role="fieldcontain" align="center">
              <input type="number" name="campoPrecio" id="campoPrecio" value="" placeholder="Precio" />
            </div>
+           <center>Existencias</center>
            <div data-role="fieldcontain" align="center">
-             <input type="number" name="campoStock" id="campoStock" value="" placeholder="Existencia" />
+             <input type="range" name="campoStock" id="campoStock" value="1" min="0" max="100" />
            </div>
 
             <div id="seleccion">
@@ -114,20 +115,12 @@
                 </select>         
                </div>          
          </div>
+         <div data-role="fieldcontain" align="center">
+             <input type="date" name="campoFecha" id="campoFecha"  placeholder="Fecha de registro" />
+           </div>
            
 
-           <div id="cajaCategorias">
-               <div data-role="fieldcontain" align="center">
-                 <fieldset data-role="controlgroup" data-type="horizontal">
-                   <input type="radio" name="categoriaSel" id="cat_ocasional" value="TDV" />
-                   <label for="cat_ocasional">Tarjeta de vídeo</label>
-                   <input type="radio" name="categoriaSel" id="cat_frecuente" value="TM" />
-                   <label for="cat_frecuente">Tarjeta madre</label>
-                   <input type="radio" name="categoriaSel" id="cat_promedio" value="Almacenamiento" />
-                   <label for="cat_promedio">Almacenamiento</label>
-                 </fieldset>                 
-               </div>          
-         </div>
+           
         
         <button id="b_guardar">Guardar</button>
         
