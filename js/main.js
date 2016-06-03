@@ -182,7 +182,7 @@ function queryDetalleSuccess(tx, results) {
 		}
 
 		var _foto;
-		if(producto.categoria=="TM")
+		if(registro.categoria=="TM")
 		{
 		foto = "images/mother.jpg";
 		}
