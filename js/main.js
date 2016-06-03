@@ -115,7 +115,7 @@ function cargaDatosSuccess(tx, results){
 		if(foto == ""){
 			foto = "assets/no_foto.png";
 		}
-		selector.append('<li id="li_'+producto.id+'"><a href="#detalle" data-uid='+producto.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ foto +'" class="img_peq"/><span>' + producto.nombre + '</span></div></a><a href="#form"  data-theme="a" data-uid='+producto.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
+		selector.append('<li id="li_'+producto.id+'"><a href="#detalle" data-uid='+producto.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ foto +'" class="img_peq"/><span>' + producto.nombre + '</span></div></a><a href="#form2"  data-theme="a" data-uid='+producto.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
 	}
 	
 	$(".linkDetalles").click(function(e){
@@ -140,7 +140,7 @@ $(document).on("pagebeforeshow", "#detalle", function(){
 
 
 function queryDBFindByID(tx) {
-    tx.executeSql('SELECT * FROM clientes WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
+    tx.executeSql('SELECT * FROM articulos WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
 }
 
 function queryDetalleSuccess(tx, results) {
@@ -151,23 +151,44 @@ function queryDetalleSuccess(tx, results) {
 	}
 	
 	$.registro = results.rows.item(0);
-	$("#categoria").html($.registro.categoria);
+	
+		if ($.registro.categoria=="TDV")
+		{
+			$("#categoria").html("Tarjeta de vídeo");
+		}
+
+		if ($.registro.categoria=="TM")
+		{
+			$("#categoria").html("Tarjeta madre");
+		}
+		if ($.registro.categoria=="monitores")
+		{
+			$("#categoria").html("Pantallas o Monitores");
+		}
+
+		if ($.registro.categoria=="memorias")
+		{
+			$("#categoria").html("Memorias");
+		}
+		$("#foto_img").attr("src", _foto);
 		var _foto = $.registro.foto;
 		if(_foto == ""){
 			_foto = "assets/no_foto.png";
 		}
-		$("#foto_img").attr("src", _foto);
-		$("#nombre").html($.registro.nombre + " " + $.registro.apellidos);
-		$("#num_tel").html($.registro.telefono);
-		$("#telefono").attr("href", "tel:" + $.registro.telefono);
-		$("#label_mail").html("Mail: " + $.registro.email);
+		
+		$("#nombre").html($.registro.nombre);
+		$("#descripcion").html($.registro.descripcion);
+		$("#precio").html($.registro.precio);
+		$("#existencia").html($.registro.stock);
+		$("#fecha").html($.registro.fecha);
+	
 }
 
 /*
 * vista detalle
 */
 //vista de la página de edición
-$(document).on('pagebeforeshow', '#form', function(){ 
+$(document).on('pagebeforeshow', '#form2', function(){ 
 	mkLog('ID recuperado en vista form: ' + $.id);
 	
 	initForm();
@@ -177,7 +198,7 @@ $(document).on('pagebeforeshow', '#form', function(){
 });
 
 function queryDBFindByIDForm(tx) {
-    tx.executeSql('SELECT * FROM clientes WHERE id='+$.id, [], queryFormSuccess, errorDB);
+    tx.executeSql('SELECT * FROM articulos WHERE id='+$.id, [], queryFormSuccess, errorDB);
 }
 
 function queryFormSuccess(tx, results) {
@@ -193,13 +214,16 @@ function queryFormSuccess(tx, results) {
 		if($.imageURL == ""){
 			$.imageURL = "assets/no_foto.png";
 		}
-		$("#fotoEdit_img").attr("src", $.imageURL);
-		$("#ti_nombre").val($.registro.nombre);
-		$("#ti_apellidos").val($.registro.apellidos);
-		$("#ti_telefono").val($.registro.telefono);
-		$("#ti_mail").val($.registro.email);
+		$("#fotoEdit_img2").attr("src", $.imageURL);
+		$("#campoNombre2").val($.registro.nombre);
+		$("#campoDescripcion2").val($.registro.descripcion);
+		$("#campoPrecio2").val($.registro.precio);
+		$("#campoStock2").val($.registro.stock);
+		$("#campoFecha2").val($.registro.fecha);
 		
-		$("#cat_"+$.registro.categoria).trigger("click").trigger("click");	
+		//$("#cat_"+$.registro.categoria).trigger("click").trigger("click");	
+
+			$('#seleccionCategorias2').val($.registro.categoria)
 		
 }
 $(document).on('pagebeforeshow', '#home', function(){ 
@@ -208,13 +232,13 @@ $(document).on('pagebeforeshow', '#home', function(){
 function initForm(){
 	$.imageURL = "assets/no_foto.png";
 	
-	$("#fotoEdit_img").attr("src", $.imageURL);
-	$("#ti_nombre").val("");
-	$("#ti_apellidos").val("");
-	$("#ti_telefono").val("");
-	$("#ti_mail").val("");
+	$("#fotoEdit_img2").attr("src", $.imageURL);
+	$("#campoNombre2").val("");
+	$("#campoDescripcion2").val("");
+	$("#campoPrecio2").val("");
+	$("#campoStock2").val("");
 		
-	$("#cat_ocasional").trigger("click").trigger("click")
+	
 }
 
 
@@ -229,7 +253,7 @@ function saveEditForm(){
 
 function queryDBUpdateForm(tx){
 	var cat = $("#cajaCategorias").find("input:checked").val();
-	tx.executeSql('UPDATE clientes SET nombre="'+$("#ti_nombre").val()+'", apellidos="'+$("#ti_apellidos").val()+'",telefono="'+$("#ti_telefono").val()+'",email="'+$("#ti_mail").val()+'",categoria="'+cat+'",foto = "'+$.imageURL+'" WHERE id='+$.id);
+	tx.executeSql('UPDATE articulos SET nombre="'+$("#campoNombre2").val()+'", apellidos="'+$("#ti_apellidos").val()+'",telefono="'+$("#ti_telefono").val()+'",email="'+$("#ti_mail").val()+'",categoria="'+cat+'",foto = "'+$.imageURL+'" WHERE id='+$.id);
 }
 function updateFormSuccess(tx) {
 	var selector = $("#li_"+$.id);
@@ -271,18 +295,19 @@ function queryDBInsertForm(tx){
 
 	//var cat = $("#cajaCategorias").find("input:checked").val();
 	var cat= $('#seleccionCategorias').val();
-	tx.executeSql("INSERT INTO articulos (nombre,descripcion,precio,categoria, stock) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+cat+"','"+$("#campoStock").val()+"')", [], newFormSuccess, errorDB);
+	tx.executeSql("INSERT INTO articulos (nombre,descripcion,precio,categoria, stock, fecha) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+cat+"','"+$("#campoStock").val()+"', '"+$("#campoFecha").val()+"')", [], newFormSuccess, errorDB);
 }
 function newFormSuccess(tx, results) {
 	/*var e = document.getElementById("seleccionCategorias");
 		var value = e.options[e.selectedIndex].value;
 		var cat = e.options[e.selectedIndex].text;*/
 	//var cat = $("#cajaCategorias").find("input:checked").val();
+
 	var cat= $('#seleccionCategorias').val();
 	var lista = $("#lista_" + cat + " ul")
 	
 	
-	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
+	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form2"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
 	obj.find('.linkDetalles').bind('click', function(e){
 		$.id = $(this).data('uid');
 	});
