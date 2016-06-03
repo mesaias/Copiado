@@ -56,9 +56,9 @@ function onDeviceReady(){
 
 	
 	$("#b_eliminar").click(function(e){
-		if($.id != -1){
+		
 		 	deleteItem();
-		 }
+		 
 	 });
 }
 
@@ -364,10 +364,39 @@ function queryDBDetele(tx){
 	tx.executeSql('DELETE FROM articulos WHERE id='+$.id);
 }
 function updateFormSuccess2(tx) {
+	var selector = $("#li_"+$.id);
+	
+	var selector = $("#li_"+$.id).clone(true);
+
 	var cat= $('#seleccionCategorias2').val();
 	var lista = $("#lista_" + cat + " ul")
-
+	if (cat=="TDV")
+	{
+		selector.find("img").attr("src", "images/tarjetavideo.png");
+	}
 	
+
+	if (cat=="TM")
+	{
+		selector.find("img").attr("src", "images/mother.jpg");
+	}
+
+	if (cat=="monitores")
+	{
+		selector.find("img").attr("src", "images/monitor.png");
+	}
+
+	if (cat=="Almacenamiento")
+	{
+		selector.find("img").attr("src", "images/drive.png");
+	}
+
+	if (cat=="memorias")
+	{
+		selector.find("img").attr("src", "images/ram.png");
+	}
+
+	selector.find("a:first").find("span").html($("#campoNombre2").val());
 	
 	
 	$("#li_"+$.id).remove();
