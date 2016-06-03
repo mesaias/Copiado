@@ -152,12 +152,12 @@ function queryDetalleSuccess(tx, results) {
 	
 	$.registro = results.rows.item(0);
 	
-		if ($.registro.categoria==TDV)
+		if ($.registro.categoria=="TDV")
 		{
 			$("#categoria").html("Tarjeta de vídeo");
 		}
 
-		if ($.registro.categoria==TM)
+		if ($.registro.categoria=="TM")
 		{
 			$("#categoria").html("Tarjeta madre");
 		}
