@@ -132,16 +132,16 @@ function cargaDatosSuccess(tx, results){
 
 		if(producto.categoria=="Almacenamiento")
 		{
-		foto = "images/drive.jpg";
+		foto = "images/drive.png";
 		}
 
 		if(producto.categoria=="memorias")
 		{
-		foto = "images/ram.jpg";
+		foto = "images/ram.png";
 		}
 		if(producto.categoria=="monitores")
 		{
-		foto = "images/monitor.jpg";
+		foto = "images/monitor.png";
 		}
 
 		selector.append('<li id="li_'+producto.id+'"><a href="#detalle" data-uid='+producto.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ foto +'" class="img_peq"/><span>' + producto.nombre + '</span></div></a><a href="#form2"  data-theme="a" data-uid='+producto.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
@@ -196,19 +196,19 @@ function queryDetalleSuccess(tx, results) {
 		if ($.registro.categoria=="monitores")
 		{
 			$("#categoria").html("Pantallas o Monitores");
-			_foto = "images/monitor.jpg";
+			_foto = "images/monitor.png";
 		}
 
 		if ($.registro.categoria=="memorias")
 		{
 			$("#categoria").html("Memorias");
-			_foto = "images/ram.jpg";
+			_foto = "images/ram.png";
 		}
 
 		if ($.registro.categoria=="Almacenamiento")
 		{
 			$("#categoria").html("Almacenamiento");
-			_foto = "images/drive.jpg";
+			_foto = "images/drive.png";
 		}
 
 		
