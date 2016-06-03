@@ -261,16 +261,22 @@ function saveNewForm(){
 }
 
 function queryDBInsertForm(tx){
-	var $("#seleccionCategorias :selected").text() //the text content of the selected option
-		$("#seleccionCategorias").val() 
+	/*
+	var cat=  $("#seleccionCategorias :selected").text() //the text content of the selected option
+		$("#seleccionCategorias").val() */
+
+		var e = document.getElementById("seleccionCategorias");
+		var value = e.options[e.selectedIndex].value;
+		var cat = e.options[e.selectedIndex].text;
 
 	//var cat = $("#cajaCategorias").find("input:checked").val();
 	
 	tx.executeSql("INSERT INTO articulos (nombre,descripcion,precio,categoria, stock) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+cat+"','"+$("#campoStock").val()+"')", [], newFormSuccess, errorDB);
 }
 function newFormSuccess(tx, results) {
-	var cat = "myvalue";
-	$('#seleccionCategorias').val(cat);
+	var e = document.getElementById("seleccionCategorias");
+		var value = e.options[e.selectedIndex].value;
+		var cat = e.options[e.selectedIndex].text;
 	//var cat = $("#cajaCategorias").find("input:checked").val();
 	var lista = $("#lista_" + cat + " ul")
 	
