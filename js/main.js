@@ -55,6 +55,13 @@ function onDeviceReady(){
 	 });
 }
 
+	$("#b_eliminar").click(function(e){
+		if($.id != -1){
+		 	deleteItem();
+		 }
+	 });
+}
+
 
 /* 
 * creación de ña base de datos
@@ -334,6 +341,34 @@ function updateFormSuccess(tx) {
 	}
 
 	selector.find("a:first").find("span").html($("#campoNombre2").val());
+	
+	
+	$("#li_"+$.id).remove();
+	
+	
+	lista.append(selector).listview('refresh');
+	
+	
+	$.mobile.changePage("#home");
+}
+
+
+function deleteItem(){
+	if(db != null){
+		db.transaction(queryDBDetele, errorDB, updateFormSuccess2);
+	}
+}
+
+function queryDBDetele(tx){
+	
+	tx.executeSql('DELETE FROM articulos WHERE id='+$.id);
+}
+function updateFormSuccess2(tx) {
+	var selector = $("#li_"+$.id);
+	
+	var selector = $("#li_"+$.id).clone(true);
+
+	
 	
 	
 	$("#li_"+$.id).remove();
