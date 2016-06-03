@@ -45,6 +45,14 @@ function onDeviceReady(){
 			saveNewForm();
 		 }
 	 });
+
+	$("#b_guardar2").click(function(e){
+		if($.id != -1){
+		 	saveEditForm();
+		 }else{
+			saveNewForm();
+		 }
+	 });
 }
 
 
