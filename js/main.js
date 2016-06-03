@@ -119,11 +119,12 @@ function cargaDatosSuccess(tx, results){
 	for(var i=0; i<results.rows.length; i++){
 		var producto = results.rows.item(i);
 		var selector = $("#lista_" + producto.categoria + " ul");
-		var foto = producto.foto;
-		if(foto == ""){
-			foto = "assets/no_foto.png";
+		var foto;
+		if(producto.categoria=="TM")
+		{
+		foto = "images/mother.jpg";
 		}
-		
+
 		selector.append('<li id="li_'+producto.id+'"><a href="#detalle" data-uid='+producto.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ foto +'" class="img_peq"/><span>' + producto.nombre + '</span></div></a><a href="#form2"  data-theme="a" data-uid='+producto.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
 	}
 	
@@ -179,11 +180,15 @@ function queryDetalleSuccess(tx, results) {
 		{
 			$("#categoria").html("Memorias");
 		}
-		$("#foto_img").attr("src", _foto);
-		var _foto = $.registro.foto;
-		if(_foto == ""){
-			_foto = "assets/no_foto.png";
+
+		var _foto;
+		if(producto.categoria=="TM")
+		{
+		foto = "images/mother.jpg";
 		}
+
+		$("#foto_img").attr("src", _foto);
+		
 		
 		$("#nombre").html($.registro.nombre);
 		$("#descripcion").html($.registro.descripcion);
