@@ -313,6 +313,25 @@ function updateFormSuccess(tx) {
 	}
 	
 
+	if (cat=="TM")
+	{
+		selector.find("img").attr("src", "images/mother.jpg");
+	}
+
+	if (cat=="monitores")
+	{
+		selector.find("img").attr("src", "images/monitor.png");
+	}
+
+	if (cat=="Almacenamiento")
+	{
+		selector.find("img").attr("src", "images/drive.png");
+	}
+
+	if (cat=="memorias")
+	{
+		selector.find("img").attr("src", "images/ram.png");
+	}
 
 	selector.find("a:first").find("span").html($("#campoNombre2").val());
 	
