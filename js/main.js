@@ -30,7 +30,7 @@ function onDeviceReady(){
     //navigator.notification.alert("PhoneGap is working");
 	
 	existe_db = window.localStorage.getItem("existe_db");
-	db = window.openDatabase("ProyectoMonica", "1.0", "La tarea que dejó", 200000);
+	db = window.openDatabase("articulos", "1.0", "El proyecto de Monica", 200000);
 	if(existe_db == null){
 		creaDB();
 	}else{
@@ -56,24 +56,24 @@ function creaDB(){
 	
 }
 
-unction creaNuevaDB(tx){
+function creaNuevaDB(tx){
 	mkLog("Creando base de datos");
 	
-	tx.executeSql('DROP TABLE IF EXISTS items');
+	tx.executeSql('DROP TABLE IF EXISTS articulos');
 	
-	var sql = "CREATE TABLE IF NOT EXISTS items ( "+
+	var sql = "CREATE TABLE IF NOT EXISTS articulos ( "+
 		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-		"name VARCHAR(50), " +
-		"description VARCHAR(255), " +
-		"price INTEGER, " +
+		"nombre VARCHAR(255), " +
+		"foto VARCHAR(255), " +
+		"descripcion VARCHAR(50), " +
+		"precio INTEGER, " +
 		"stock INTEGER, " +
-		"category VARCHAR(50), " +
-		"image VARCHAR(100), " +
-		"date VARCHAR(30) )";
+		"categoria VARCHAR(50), " + 
+		"fecha VARCHAR(30) )";
 		
 	tx.executeSql(sql);
 	
-	tx.executeSql("INSERT INTO items (name, description, price, stock, category, date) VALUES ('GTX 960','Está childa', '3500','15','TDV','25/25/2016')");
+	tx.executeSql("INSERT INTO articulos (nombre,descripcion,precio,stock,categoria,fecha) VALUES ('GTX 960','Tiene 2 GB de VRAM','4500','15','TDV','12/12/2016')");
 }
 
 
@@ -98,7 +98,7 @@ function cargaDatos(){
 
 function cargaRegistros(tx){
 	mkLog("Cargando registros de la base de datos");
-	tx.executeSql('SELECT * FROM items', [], cargaDatosSuccess, errorDB);
+	tx.executeSql('SELECT * FROM articulos', [], cargaDatosSuccess, errorDB);
 }
 
 function cargaDatosSuccess(tx, results){
@@ -109,13 +109,13 @@ function cargaDatosSuccess(tx, results){
 	}
 	
 	for(var i=0; i<results.rows.length; i++){
-		var persona = results.rows.item(i);
-		var selector = $("#lista_" + persona.category + " ul");
-		var foto = persona.image;
+		var producto = results.rows.item(i);
+		var selector = $("#lista_" + producto.categoria + " ul");
+		var foto = producto.foto;
 		if(foto == ""){
 			foto = "assets/no_foto.png";
 		}
-		selector.append('<li id="li_'+persona.id+'"><a href="#detalle" data-uid='+persona.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ image +'" class="img_peq"/><span>' + persona.name + '</span></div></a><a href="#form"  data-theme="a" data-uid='+persona.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
+		selector.append('<li id="li_'+producto.id+'"><a href="#detalle" data-uid='+producto.id+' class="linkDetalles"><div class="interior_lista"><img src="'+ foto +'" class="img_peq"/><span>' + producto.nombre + '</span></div></a><a href="#form"  data-theme="a" data-uid='+producto.id+'  class="linkForm">Predet.</a></li>').listview('refresh');
 	}
 	
 	$(".linkDetalles").click(function(e){
@@ -140,7 +140,7 @@ $(document).on("pagebeforeshow", "#detalle", function(){
 
 
 function queryDBFindByID(tx) {
-    tx.executeSql('SELECT * FROM items WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
+    tx.executeSql('SELECT * FROM clientes WHERE id='+$.id, [], queryDetalleSuccess, errorDB);
 }
 
 function queryDetalleSuccess(tx, results) {
@@ -151,18 +151,16 @@ function queryDetalleSuccess(tx, results) {
 	}
 	
 	$.registro = results.rows.item(0);
-	$("#categoria").html($.registro.category);
-		var _foto = $.registro.image;
+	$("#categoria").html($.registro.categoria);
+		var _foto = $.registro.foto;
 		if(_foto == ""){
 			_foto = "assets/no_foto.png";
 		}
-		$("#campoImagen").attr("src", _foto);
-		$("#campoNombre").html($.registro.name );
-		$("#campoDescripcion").html($.registro.description);
-		$("#campoPrecio").html($.registro.price);
-		$("#campoStock").html($.registro.stock);
-		$("#campoFecha").html($.registro.date);
-}
+		$("#foto_img").attr("src", _foto);
+		$("#nombre").html($.registro.nombre + " " + $.registro.apellidos);
+		$("#num_tel").html($.registro.telefono);
+		$("#telefono").attr("href", "tel:" + $.registro.telefono);
+		$("#label_mail").html("Mail: " + $.registro.email);
 }
 
 /*
@@ -179,7 +177,7 @@ $(document).on('pagebeforeshow', '#form', function(){
 });
 
 function queryDBFindByIDForm(tx) {
-    tx.executeSql('SELECT * FROM items WHERE id='+$.id, [], queryFormSuccess, errorDB);
+    tx.executeSql('SELECT * FROM clientes WHERE id='+$.id, [], queryFormSuccess, errorDB);
 }
 
 function queryFormSuccess(tx, results) {
@@ -191,19 +189,17 @@ function queryFormSuccess(tx, results) {
 	
 	$.registro = results.rows.item(0);
 	
-		$.imageURL = $.registro.image;
+		$.imageURL = $.registro.foto;
 		if($.imageURL == ""){
 			$.imageURL = "assets/no_foto.png";
 		}
 		$("#fotoEdit_img").attr("src", $.imageURL);
-		$("#campoImagen").attr("src", _foto);
-		$("#campoNombre").html($.registro.name );
-		$("#campoDescripcion").html($.registro.description);
-		$("#campoPrecio").html($.registro.price);
-		$("#campoStock").html($.registro.stock);
-		$("#campoFecha").html($.registro.date);
+		$("#ti_nombre").val($.registro.nombre);
+		$("#ti_apellidos").val($.registro.apellidos);
+		$("#ti_telefono").val($.registro.telefono);
+		$("#ti_mail").val($.registro.email);
 		
-		
+		$("#cat_"+$.registro.categoria).trigger("click").trigger("click");	
 		
 }
 $(document).on('pagebeforeshow', '#home', function(){ 
@@ -213,13 +209,12 @@ function initForm(){
 	$.imageURL = "assets/no_foto.png";
 	
 	$("#fotoEdit_img").attr("src", $.imageURL);
-	$("#campoNombre").val("");
-	$("#campoDescripcion").val("");
-	$("#campoPrecio").val("");
-	$("#campoStock").val("");
-	$("#campoFecha").val("");
-
-	
+	$("#ti_nombre").val("");
+	$("#ti_apellidos").val("");
+	$("#ti_telefono").val("");
+	$("#ti_mail").val("");
+		
+	$("#cat_ocasional").trigger("click").trigger("click")
 }
 
 
@@ -234,7 +229,7 @@ function saveEditForm(){
 
 function queryDBUpdateForm(tx){
 	var cat = $("#cajaCategorias").find("input:checked").val();
-	tx.executeSql('UPDATE items SET nombre="'+$("#ti_nombre").val()+'", apellidos="'+$("#ti_apellidos").val()+'",telefono="'+$("#ti_telefono").val()+'",email="'+$("#ti_mail").val()+'",categoria="'+cat+'",foto = "'+$.imageURL+'" WHERE id='+$.id);
+	tx.executeSql('UPDATE clientes SET nombre="'+$("#ti_nombre").val()+'", apellidos="'+$("#ti_apellidos").val()+'",telefono="'+$("#ti_telefono").val()+'",email="'+$("#ti_mail").val()+'",categoria="'+cat+'",foto = "'+$.imageURL+'" WHERE id='+$.id);
 }
 function updateFormSuccess(tx) {
 	var selector = $("#li_"+$.id);
@@ -266,16 +261,16 @@ function saveNewForm(){
 }
 
 function queryDBInsertForm(tx){
-	//var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
+	var cat = $("#cajaCategorias").find("input:checked").val();
 	
-	tx.executeSql("INSERT INTO items (name, description,  price, category, stock,image, date) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+"TDV"+"','"+$.imageURL+"','"+$("#campoStock").val()+"','"+$("#campoFecha").val()+"')", [], newFormSuccess, errorDB);
+	tx.executeSql("INSERT INTO articulos (nombre,descripcion,precio,categoria, stock) VALUES ('"+$("#campoNombre").val()+"','"+$("#campoDescripcion").val()+"','"+$("#campoPrecio").val()+"','"+cat+"','"+$("#campoStock").val()+"')", [], newFormSuccess, errorDB);
 }
 function newFormSuccess(tx, results) {
-	//var cat = $("#campoCategoria").selectmenu({ width : 'auto'});
-	var lista = $("#lista_" + "TDV" + " ul")
+	var cat = $("#cajaCategorias").find("input:checked").val();
+	var lista = $("#lista_" + cat + " ul")
 	
 	
-	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><img src="'+ $.imageUR +'" class="img_peq"/><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
+	var obj = $('<li id="li_'+results.insertId+'"><a href="#detalle" data-uid='+results.insertId+' class="linkDetalles"><div class="interior_lista"><span>' + $("#campoNombre").val() + '</span></div></a><a href="#form"  data-theme="a" data-uid='+results.insertId+'  class="linkForm">Predet.</a></li>');
 	obj.find('.linkDetalles').bind('click', function(e){
 		$.id = $(this).data('uid');
 	});
