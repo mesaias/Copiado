@@ -161,7 +161,6 @@ function queryDetalleSuccess(tx, results) {
 		$("#descripcion").html($.registro.descripcion);
 		$("#precio").html($.registro.precio);
 		$("#existencia").html($.registro.stock);
-		$("#categoriaDelPro").html($.registro.categoria);
 		$("#fecha").html($.registro.fecha);
 	
 }
