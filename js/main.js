@@ -219,10 +219,11 @@ function queryFormSuccess(tx, results) {
 		$("#campoDescripcion2").val($.registro.descripcion);
 		$("#campoPrecio2").val($.registro.precio);
 		$("#campoStock2").val($.registro.stock);
+		$("#campoFecha2").val($.registro.fecha);
 		
 		//$("#cat_"+$.registro.categoria).trigger("click").trigger("click");	
 
-		//	$('#seleccionCategorias2').val($.registro.categoria)
+			$('#seleccionCategorias2').val($.registro.categoria)
 		
 }
 $(document).on('pagebeforeshow', '#home', function(){ 
